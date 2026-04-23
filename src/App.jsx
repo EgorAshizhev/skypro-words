@@ -1,122 +1,66 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import React, { useState } from 'react';
+import Header from './components/Header/Header';
+import Main from './components/Main/Main';
+import PopNewCard from './components/PopNewCard/PopNewCard';
+import PopBrowse from './components/PopBrowse/PopBrowse';
+import PopExit from './components/PopExit/PopExit';
+import './App.css';
+import './main.css';
+import './main_dark.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [isNewCardOpen, setIsNewCardOpen] = useState(false);
+  const [isBrowseOpen, setIsBrowseOpen] = useState(false);
+  const [isExitOpen, setIsExitOpen] = useState(false);
+  const [selectedTask, setSelectedTask] = useState(null);
+  const [isDarkTheme, setIsDarkTheme] = useState(false);
+  const [tasks, setTasks] = useState([
+    { id: 1, title: 'Название задачи', description: 'Описание задачи', date: '30.10.23', category: 'Web Design', status: 'no-status' },
+    { id: 2, title: 'Название задачи', description: 'Описание задачи', date: '30.10.23', category: 'Research', status: 'no-status' },
+    { id: 3, title: 'Название задачи', description: 'Описание задачи', date: '30.10.23', category: 'Web Design', status: 'need-to-do' },
+  ]);
+
+  const handleCreateTask = (newTask) => {
+    setTasks([...tasks, { ...newTask, id: Date.now() }]);
+    setIsNewCardOpen(false);
+  };
+
+  const handleUpdateTask = (updatedTask) => {
+    setTasks(tasks.map(task => task.id === updatedTask.id ? updatedTask : task));
+    setIsBrowseOpen(false);
+  };
+
+  const handleDeleteTask = (taskId) => {
+    setTasks(tasks.filter(task => task.id !== taskId));
+    setIsBrowseOpen(false);
+  };
+
+  const handleOpenBrowse = (task) => {
+    setSelectedTask(task);
+    setIsBrowseOpen(true);
+  };
+
+  const handleThemeToggle = () => {
+    setIsDarkTheme(!isDarkTheme);
+    document.body.classList.toggle('dark-theme');
+  };
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+    <div className="wrapper">
+      <Header
+        onOpenNewCard={() => setIsNewCardOpen(true)}
+        onOpenPopExit={() => setIsExitOpen(true)}
+        userName="Ivan Ivanov"
+        userEmail="ivan.ivanov@gmail.com"
+        onThemeToggle={handleThemeToggle}
+        isDarkTheme={isDarkTheme}
+      />
+      <Main tasks={tasks} onOpenBrowse={handleOpenBrowse} />
+      <PopNewCard isOpen={isNewCardOpen} onClose={() => setIsNewCardOpen(false)} onCreateTask={handleCreateTask} />
+      <PopBrowse isOpen={isBrowseOpen} task={selectedTask} onClose={() => setIsBrowseOpen(false)} onUpdateTask={handleUpdateTask} onDeleteTask={handleDeleteTask} />
+      <PopExit isOpen={isExitOpen} onClose={() => setIsExitOpen(false)} onConfirm={() => { console.log('Выход'); }} />
+    </div>
+  );
 }
 
-export default App
+export default App;
