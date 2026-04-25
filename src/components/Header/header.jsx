@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PopUser from '../PopUser/PopUser';
-// import logoLight from './public/logo.png';
-// import logoDark from './public/logo_dark.png';
+import logoLight from '/public/logo.png';
+import logoDark from '/public/logo_dark.png';
 
 function Header({ onOpenNewCard, onOpenPopExit, userName, userEmail, onThemeToggle, isDarkTheme }) {
   const [isUserPopOpen, setIsUserPopOpen] = useState(false);
@@ -12,7 +12,7 @@ function Header({ onOpenNewCard, onOpenPopExit, userName, userEmail, onThemeTogg
         <div className="header__block">
           <div className={`header__logo ${isDarkTheme ? '_dark' : '_show _light'}`}>
             <a href="/" target="_self">
-              <img src={isDarkTheme ? logoDark : logoLight} alt="logo" />
+              <img src={isDarkTheme ? logoDark : logoLight} alt="logo"/>
             </a>
           </div>
           <nav className="header__nav">
