@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PopUser from '../PopUser/PopUser';
-import logoLight from '/public/logo.png';
-import logoDark from '/public/logo_dark.png';
+import logoLight from '../../public/images/logo.png';
+import logoDark from '..\..public\images\logo_dark.png';
 
 function Header({ onOpenNewCard, onOpenPopExit, userName, userEmail, onThemeToggle, isDarkTheme }) {
   const [isUserPopOpen, setIsUserPopOpen] = useState(false);

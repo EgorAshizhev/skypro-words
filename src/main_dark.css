@@ -45,7 +45,7 @@ body {
   color: #FFFFFF;
 }
 
-.wrapper {
+.dark-theme .wrapper {
   max-width: 100%;
   width: 100vw;
   min-height: 100vh;
@@ -733,7 +733,7 @@ position: relative;
 	display: none;
 }
 
-.header {
+.dark-theme .header {
   width: 100%;
   margin: 0 auto;
   background-color: #20202C;
@@ -751,6 +751,9 @@ position: relative;
 }
 .header__logo img {
   width: 85px;
+}
+.header__logo_show_light {
+  display: none;
 }
 .header__nav {
   max-width: 290px;
@@ -812,7 +815,7 @@ box-shadow: 0px 10px 39px 0px rgba(148, 166, 190, 0.40);
   z-index: 2;
 }
 
-.main {
+.dark-theme .main {
   width: 100%;
   background-color: #151419;
 }
@@ -843,7 +846,7 @@ box-shadow: 0px 10px 39px 0px rgba(148, 166, 190, 0.40);
   text-transform: uppercase;
 }
 
-.cards {
+.dark-theme .cards {
   width: 100%;
   display: block;
 }
