@@ -752,9 +752,7 @@ position: relative;
 .header__logo img {
   width: 85px;
 }
-.header__logo_show_light {
-  display: none;
-}
+
 .header__nav {
   max-width: 290px;
   padding: 0;

@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import PopUser from '../PopUser/PopUser';
-import logoLight from '../../public/images/logo.png';
-import logoDark from '..\..public\images\logo_dark.png';
+const logoLight = '/images/logo.png';
+const logoDark = '/images/logo_dark.png';
 
 function Header({ onOpenNewCard, onOpenPopExit, userName, userEmail, onThemeToggle, isDarkTheme }) {
   const [isUserPopOpen, setIsUserPopOpen] = useState(false);
-
   return (
     <header className="header">
       <div className="container">

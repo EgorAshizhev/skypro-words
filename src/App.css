@@ -722,7 +722,7 @@ body {
   height: 70px;
   display: flex;
   flex-wrap: nowrap;
-  flex-direction: row-reverse;
+  flex-direction: row;
   align-items: center;
   justify-content: space-between;
   position: relative;
@@ -730,7 +730,7 @@ body {
   left: 0;
   padding: 0 10px;
 }
-.header__logo ._show ._light {
+.header__logo img {
   width: 85px;
 }
 .header__nav {

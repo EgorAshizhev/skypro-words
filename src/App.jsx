@@ -4,6 +4,8 @@ import Main from './components/Main/Main';
 import PopNewCard from './components/PopNewCard/PopNewCard';
 import PopBrowse from './components/PopBrowse/PopBrowse';
 import PopExit from './components/PopExit/PopExit';
+const logoLight = '/images/logo.png';
+const logoDark = '/images/logo_dark.png';
 import './main_dark.css';
 import './App.css';
 
@@ -12,45 +14,47 @@ import './App.css';
 
 
 function App() {
-  const [isNewCardOpen, setIsNewCardOpen] = useState(false);
-  const [isBrowseOpen, setIsBrowseOpen] = useState(false);
-  const [isExitOpen, setIsExitOpen] = useState(false);
-  const [selectedTask, setSelectedTask] = useState(null);
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
-  const [tasks, setTasks] = useState([
-    { id: 1, title: 'Название задачи', description: 'Описание задачи', date: '30.10.23', category: 'Web Design', status: 'no-status' },
-    { id: 2, title: 'Название задачи', description: 'Описание задачи', date: '30.10.23', category: 'Research', status: 'no-status' },
-    { id: 3, title: 'Название задачи', description: 'Описание задачи', date: '30.10.23', category: 'Web Design', status: 'need-to-do' },
-  ]);
-
-  const handleCreateTask = (newTask) => {
-    setTasks([...tasks, { ...newTask, id: Date.now() }]);
-    setIsNewCardOpen(false);
-  };
-
-  const handleUpdateTask = (updatedTask) => {
-    setTasks(tasks.map(task => task.id === updatedTask.id ? updatedTask : task));
-    setIsBrowseOpen(false);
-  };
-
-  const handleDeleteTask = (taskId) => {
-    setTasks(tasks.filter(task => task.id !== taskId));
-    setIsBrowseOpen(false);
-  };
-
-  const handleOpenBrowse = (task) => {
-    setSelectedTask(task);
-    setIsBrowseOpen(true);
-  };
-
-  const handleThemeToggle = () => {
-    setIsDarkTheme(!isDarkTheme);
-    document.body.classList.toggle('dark-theme');
-  };
-  
-
-  return (
-    <>
+	const [isNewCardOpen, setIsNewCardOpen] = useState(false);
+	const [isBrowseOpen, setIsBrowseOpen] = useState(false);
+	const [isExitOpen, setIsExitOpen] = useState(false);
+	const [selectedTask, setSelectedTask] = useState(null);
+	const [isDarkTheme, setIsDarkTheme] = useState(false);
+	const [tasks, setTasks] = useState([
+		{ id: 1, title: 'Название задачи', description: 'Описание задачи', date: '30.10.23', category: 'Web Design', status: 'no-status' },
+		{ id: 2, title: 'Название задачи', description: 'Описание задачи', date: '30.10.23', category: 'Research', status: 'no-status' },
+		{ id: 3, title: 'Название задачи', description: 'Описание задачи', date: '30.10.23', category: 'Web Design', status: 'need-to-do' },
+	]);
+	
+	
+	const handleCreateTask = (newTask) => {
+		setTasks([...tasks, { ...newTask, id: Date.now() }]);
+		setIsNewCardOpen(false);
+	};
+	
+	const handleUpdateTask = (updatedTask) => {
+		setTasks(tasks.map(task => task.id === updatedTask.id ? updatedTask : task));
+		setIsBrowseOpen(false);
+	};
+	
+	const handleDeleteTask = (taskId) => {
+		setTasks(tasks.filter(task => task.id !== taskId));
+		setIsBrowseOpen(false);
+	};
+	
+	const handleOpenBrowse = (task) => {
+		setSelectedTask(task);
+		setIsBrowseOpen(true);
+	};
+	
+	const handleThemeToggle = () => {
+		setIsDarkTheme(!isDarkTheme);
+		document.body.classList.toggle('dark-theme');
+	};
+	
+	
+	return (
+		
+		<>
     <div className="wrapper">
 			<div className="pop-exit" id="popExit">
 				<div className="pop-exit__container">
@@ -319,12 +323,9 @@ function App() {
 		<header className="header">
 			<div className="container">
 				<div className="header__block">
-					{/* <div className="header__logo _show _light">
-						<a href="" target="_self"><img src="../public/images/logo.png" alt="logo"/></a>
+					<div class="header__logo">
+						<a href="" target="_self"><img src={isDarkTheme ? logoDark : logoLight} alt="logo"/></a>
 					</div>
-					<div className="header__logo _dark">
-						<a href="" target="_self"><img src="..public\images\logo_dark.png" alt="logodark"/></a>
-					</div> */}
 					<nav className="header__nav">
 						<button className="header__btn-main-new _hover01" id="btnMainNew"><a href="#popNewCard">Создать новую задачу</a></button>
 						<a href="#user-set-target" className="header__user _hover02">Ivan Ivanov</a>
