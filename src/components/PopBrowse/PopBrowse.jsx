@@ -1,104 +1,63 @@
-import React, { useState, useEffect } from 'react';
-import Calendar from '../Calendar/Calendar';
+import React, { useState } from 'react';
+import { Calendar } from '../Calendar/Calendar';
 
-function PopBrowse({ isOpen, task, onClose, onUpdateTask, onDeleteTask }) {
-  const [isEditing, setIsEditing] = useState(false);
-  const [editedTask, setEditedTask] = useState(task);
-  const [selectedStatus, setSelectedStatus] = useState(task?.status || 'need-to-do');
-
-  useEffect(() => {
-    if (task) {
-      setEditedTask(task);
-      setSelectedStatus(task.status);
-    }
-  }, [task]);
-
-  if (!isOpen || !task) return null;
-
-  const handleSave = () => {
-    onUpdateTask({ ...editedTask, status: selectedStatus });
-    setIsEditing(false);
-  };
-
-  const statuses = [
-    { value: 'no-status', label: 'Без статуса' },
-    { value: 'need-to-do', label: 'Нужно сделать' },
-    { value: 'in-progress', label: 'В работе' },
-    { value: 'testing', label: 'Тестирование' },
-    { value: 'done', label: 'Готово' }
-  ];
-
+export const PopBrowse = () => {
   return (
-    <div className="pop-browse" id="popBrowse">
-      <div className="pop-browse__container">
-        <div className="pop-browse__block">
-          <div className="pop-browse__content">
-            <div className="pop-browse__top-block">
-              {isEditing ? (
-                <input className="pop-browse__ttl" value={editedTask.title} onChange={(e) => setEditedTask({ ...editedTask, title: e.target.value })} />
-              ) : (
-                <h3 className="pop-browse__ttl">{task.title}</h3>
-              )}
-              <div className={`categories__theme theme-top _orange _active-category`}>
-                <p className="_orange">{task.category}</p>
-              </div>
-            </div>
-
-            <div className="pop-browse__status status">
-              <p className="status__p subttl">Статус</p>
-              <div className="status__themes">
-                {statuses.map((status) => (
-                  <div key={status.value} className={`status__theme ${selectedStatus !== status.value ? '_hide' : ''} ${status.value === 'need-to-do' ? '_gray' : ''}`} onClick={() => !isEditing && setSelectedStatus(status.value)}>
-                    <p className={status.value === 'need-to-do' ? '_gray' : ''}>{status.label}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="pop-browse__wrap">
-              <form className="pop-browse__form form-browse">
-                <div className="form-browse__block">
-                  <label htmlFor="textArea01" className="subttl">Описание задачи</label>
-                  {isEditing ? (
-                    <textarea className="form-browse__area" name="text" id="textArea01" value={editedTask.description} onChange={(e) => setEditedTask({ ...editedTask, description: e.target.value })} placeholder="Введите описание задачи..." />
-                  ) : (
-                    <textarea className="form-browse__area" name="text" id="textArea01" readOnly value={task.description} placeholder="Введите описание задачи..." />
-                  )}
+    <div class="pop-browse" id="popBrowse">
+    <div class="pop-browse__container">
+        <div class="pop-browse__block">
+            <div class="pop-browse__content">
+                <div class="pop-browse__top-block">
+                    <h3 class="pop-browse__ttl">Название задачи</h3>
+                    <div class="categories__theme theme-top _orange _active-category">
+                        <p class="_orange">Web Design</p>
+                    </div>
                 </div>
-              </form>
-              <Calendar selectedDate={isEditing ? editedTask.date : task.date} onDateSelect={(date) => isEditing && setEditedTask({ ...editedTask, date })} isBrowseMode={true} />
-            </div>
-
-            <div className="theme-down__categories theme-down">
-              <p className="categories__p subttl">Категория</p>
-              <div className={`categories__theme _orange _active-category`}>
-                <p className="_orange">{task.category}</p>
-              </div>
-            </div>
-
-            {!isEditing ? (
-              <div className="pop-browse__btn-browse">
-                <div className="btn-group">
-                  <button className="btn-browse__edit _btn-bor _hover03" onClick={() => setIsEditing(true)}>Редактировать задачу</button>
-                  <button className="btn-browse__delete _btn-bor _hover03" onClick={() => onDeleteTask(task.id)}>Удалить задачу</button>
+                <div class="pop-browse__status status">
+                    <p class="status__p subttl">Статус</p>
+                    <div class="status__themes">
+                        <div class="status__theme _hide"><p>Без статуса</p></div>
+                        <div class="status__theme _gray"><p class="_gray">Нужно сделать</p></div>
+                        <div class="status__theme _hide"><p>В работе</p></div>
+                        <div class="status__theme _hide"><p>Тестирование</p></div>
+                        <div class="status__theme _hide"><p>Готово</p></div>
+                    </div>
                 </div>
-                <button className="btn-browse__close _btn-bg _hover01" onClick={onClose}>Закрыть</button>
-              </div>
-            ) : (
-              <div className="pop-browse__btn-edit">
-                <div className="btn-group">
-                  <button className="btn-edit__edit _btn-bg _hover01" onClick={handleSave}>Сохранить</button>
-                  <button className="btn-edit__edit _btn-bor _hover03" onClick={() => setIsEditing(false)}>Отменить</button>
-                  <button className="btn-edit__delete _btn-bor _hover03" onClick={() => onDeleteTask(task.id)}>Удалить задачу</button>
+                <div class="pop-browse__wrap">
+                    <form class="pop-browse__form form-browse" id="formBrowseCard" action="#">									
+                        <div class="form-browse__block">
+                            <label for="textArea01" class="subttl">Описание задачи</label>
+                            <textarea class="form-browse__area" name="text" id="textArea01" readonly placeholder="Введите описание задачи..."></textarea>
+                        </div>
+                    </form>
+                    <div class="pop-new-card__calendar calendar">
+                    </div>
                 </div>
-                <button className="btn-edit__close _btn-bg _hover01" onClick={onClose}>Закрыть</button>
-              </div>
-            )}
-          </div>
+                <div class="theme-down__categories theme-down">
+                    <p class="categories__p subttl">Категория</p>
+                    <div class="categories__theme _orange _active-category">
+                        <p class="_orange">Web Design</p>
+                    </div>
+                </div>
+                <div class="pop-browse__btn-browse ">
+                    <div class="btn-group">
+                        <button class="btn-browse__edit _btn-bor _hover03"><a href="#">Редактировать задачу</a></button>
+                        <button class="btn-browse__delete _btn-bor _hover03"><a href="#">Удалить задачу</a></button>
+                    </div>
+                    <button class="btn-browse__close _btn-bg _hover01"><a href="#">Закрыть</a></button>
+                </div>
+                <div class="pop-browse__btn-edit _hide">
+                    <div class="btn-group">
+                        <button class="btn-edit__edit _btn-bg _hover01"><a href="#">Сохранить</a></button>
+                        <button class="btn-edit__edit _btn-bor _hover03"><a href="#">Отменить</a></button>
+                        <button class="btn-edit__delete _btn-bor _hover03" id="btnDelete"><a href="#">Удалить задачу</a></button>
+                    </div>
+                    <button class="btn-edit__close _btn-bg _hover01"><a href="#">Закрыть</a></button>
+                </div>												
+            </div>
         </div>
-      </div>
     </div>
-  );
-}
+</div>
 
-export default PopBrowse;
+  );
+};
