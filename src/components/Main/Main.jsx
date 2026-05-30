@@ -1,32 +1,20 @@
-import React from 'react';
-import Column from '../Column/Column';
+import React, { useState } from 'react';
+import { Column } from '../Column/Column';
 
-function Main({ tasks, onOpenBrowse }) {
-  const columns = [
-    { title: 'Без статуса', status: 'no-status' },
-    { title: 'Нужно сделать', status: 'need-to-do' },
-    { title: 'В работе', status: 'in-progress' },
-    { title: 'Тестирование', status: 'testing' },
-    { title: 'Готово', status: 'done' },
-  ];
-
-  const getTasksByStatus = (status) => {
-    return tasks.filter(task => task.status === status);
-  };
-
+export const Main = () => {
   return (
     <main className="main">
       <div className="container">
         <div className="main__block">
           <div className="main__content">
-            {columns.map((column, index) => (
-              <Column key={index} title={column.title} tasks={getTasksByStatus(column.status)} onOpenBrowse={onOpenBrowse} />
-            ))}
+            <Column title="Без статуса" />
+            <Column title="Нужно сделать" />
+            <Column title="В работе" />
+            <Column title="Тестирование" />
+            <Column title="Готово" />
           </div>
         </div>
       </div>
     </main>
   );
-}
-
-export default Main;
+};
