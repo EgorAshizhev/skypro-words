@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 export const Calendar = () => {
   return (
-   <div class="pop-new-card__calendar calendar">
-    <p class="calendar__ttl subttl">Даты</p>									
-    <div class="calendar__block">
-        <div class="calendar__nav">
-            <div class="calendar__month">Сентябрь 2023</div>
-            <div class="nav__actions">
+   <div className="pop-new-card__calendar calendar">
+    <p className="calendar__ttl subttl">Даты</p>									
+    <div className="calendar__block">
+        <div className="calendar__nav">
+            <div className="calendar__month">Сентябрь 2023</div>
+            <div className="nav__actions">
                 <div class="nav__action" data-action="prev">
                     <svg xmlns="http://www.w3.org/2000/svg" width="6" height="11" viewBox="0 0 6 11">
                         <path d="M5.72945 1.95273C6.09018 1.62041 6.09018 1.0833 5.72945 0.750969C5.36622 0.416344 4.7754 0.416344 4.41218 0.750969L0.528487 4.32883C-0.176162 4.97799 -0.176162 6.02201 0.528487 6.67117L4.41217 10.249C4.7754 10.5837 5.36622 10.5837 5.72945 10.249C6.09018 9.9167 6.09018 9.37959 5.72945 9.04727L1.87897 5.5L5.72945 1.95273Z" />
@@ -19,14 +19,14 @@ export const Calendar = () => {
                 </div>
             </div>
         </div>
-        <div class="calendar__content">
-            <div class="calendar__days-names">
-                <div class="calendar__day-name">пн</div>
-                <div class="calendar__day-name">вт</div>
-                <div class="calendar__day-name">ср</div>
-                <div class="calendar__day-name">чт</div>
-                <div class="calendar__day-name">пт</div>
-                <div class="calendar__day-name -weekend-">сб</div>
+        <div className="calendar__content">
+            <div className="calendar__days-names">
+                <div className="calendar__day-name">пн</div>
+                <div className="calendar__day-name">вт</div>
+                <div className="calendar__day-name">ср</div>
+                <div className="calendar__day-name">чт</div>
+                <div className="calendar__day-name">пт</div>
+                <div className="calendar__day-name -weekend-">сб</div>
                 <div class="calendar__day-name -weekend-">вс</div>
             </div>
             <div class="calendar__cells">
@@ -39,8 +39,8 @@ export const Calendar = () => {
             </div>
         </div>
         <input type="hidden" id="datepick_value" value="08.09.2023"/>
-        <div class="calendar__period">
-            <p class="calendar__p date-end">Выберите срок исполнения <span class="date-control"></span>.</p>
+        <div className="calendar__period">
+            <p className="calendar__p date-end">Выберите срок исполнения <span className="date-control"></span>.</p>
         </div>
     </div>
 </div>
