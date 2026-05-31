@@ -5,7 +5,10 @@ import { Main } from './components/Main/Main';
 import { PopNewCard } from './components/PopNewCard/PopNewCard';
 import { PopBrowse } from './components/PopBrowse/PopBrowse';
 import { cardList } from './data';
+
+
 import './App.css';
+
 
 export const App = () => {
   const [loading, setLoading] = useState(true);
@@ -26,6 +29,7 @@ export const App = () => {
   }, {});
 
   return (
+    <>
     <div className="wrapper">
       <Header />
       <PopExit />
@@ -33,6 +37,7 @@ export const App = () => {
       <PopBrowse />
       <PopNewCard />
     </div>
+    </>
   );
 };
 
