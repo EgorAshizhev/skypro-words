@@ -1,6 +1,17 @@
 import styled from "styled-components";
 import React, { useState } from 'react';
-import  { SHeader, SHeaderBlock, BtnMainNew, SHeaderNav, SHeaderUser, SHeaderPopUserSet }  from './Header.styled';
+import  { SHeader, 
+  SHeaderBlock, 
+  BtnMainNew, 
+  SHeaderNav, 
+  SHeaderUser, 
+  SHeaderPopUserSet, 
+  SHConteiner,
+  SPopUserSetName,
+  SPopUserSetMail,
+  SPopUserSetTheme,
+  PopUserCheckbox,
+  PopUserButton }  from './Header.styled';
 
 export const Header = () => {
   const [isUserPopOpen, setIsUserPopOpen] = useState(false);
@@ -16,8 +27,8 @@ export const Header = () => {
   };
 
 return (
-  <SHeader>
-    <div className="container">
+  <SHeader className="header">
+    <SHConteiner className="container">
       <SHeaderBlock>
         <div className="header__logo _show _light">
           <a href="/" target="_self">
@@ -29,7 +40,7 @@ return (
             <img src="./public/images/logo_dark.png" alt="logo" />
           </a>
         </div>
-        <SHeaderNav>
+        <SHeaderNav className="header__nav">
           <BtnMainNew className="_hover01" id="btnMainNew">
             <a href="#popNewCard">Создать новую задачу</a>
           </BtnMainNew>
@@ -39,27 +50,25 @@ return (
           {isUserPopOpen && (
             <SHeaderPopUserSet className="pop-user-set" id="user-set-target">
               <a href="#" className="pop-user-set__close" onClick={closeUserPop}>✕</a>
-              <p className="pop-user-set__name">Ivan Ivanov</p>
-              <p className="pop-user-set__mail">ivan.ivanov@gmail.com</p>
-              <div className="pop-user-set__theme">
+              <SPopUserSetName className="pop-user-set__name">Ivan Ivanov</SPopUserSetName>
+              <SPopUserSetMail className="pop-user-set__mail">ivan.ivanov@gmail.com</SPopUserSetMail>
+              <SPopUserSetTheme className="pop-user-set__theme">
                 <p>Темная тема</p>
-                <input type="checkbox" className="checkbox" name="checkbox" />
-              </div>
-              <button
-                type="button"
-                className="_hover03"
-                onClick={() => {
+                <PopUserCheckbox type="checkbox" className="checkbox" name="checkbox" />
+              </SPopUserSetTheme>
+              <PopUserButton className="_hover03" type="button"
+                  onClick={() => {
                   closeUserPop();
                   window.location.hash = 'popExit';
                 }}
               >
                 Выйти
-              </button>
+              </PopUserButton>
             </SHeaderPopUserSet>
           )}
         </SHeaderNav>
       </SHeaderBlock>
-    </div>
+    </SHConteiner>
   </SHeader>
 );
 };

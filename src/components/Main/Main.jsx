@@ -1,6 +1,8 @@
 // src/components/Main/Main.jsx
+import styled from 'styled-components';
 import React from 'react';
 import { Column } from '../Column/Column';
+import { SMain, SMConteiner, SMainBlock, SMainContent } from './Main.styled';
 
 export const Main = ({ loading, groupedCards }) => {
   if (loading) {
@@ -20,10 +22,10 @@ export const Main = ({ loading, groupedCards }) => {
   ];
 
   return (
-    <main className="main">
-      <div className="container">
-        <div className="main__block">
-          <div className="main__content">
+    <SMain>
+      <SMConteiner>
+        <SMainBlock>
+          <SMainContent>
             {columnTitles.map((title) => (
               <Column
                 key={title}
@@ -31,9 +33,9 @@ export const Main = ({ loading, groupedCards }) => {
                 cards={groupedCards[title] || []}
               />
             ))}
-          </div>
-        </div>
-      </div>
-    </main>
+          </SMainContent>
+        </SMainBlock>
+      </SMConteiner>
+    </SMain>
   );
 };
