@@ -1,5 +1,11 @@
 
 import React from 'react';
+import { SPopExite, 
+  SPopExContainer, 
+  SPopExBlock, SPopExTtl, 
+  SPopExFormGroup, 
+  SPopExBtnYes,
+  SPopExNo } from './PopExit.styled';
 
 export const PopExit = () => {
   const closePopExit = (e) => {
@@ -16,22 +22,22 @@ export const PopExit = () => {
   };
 
   return (
-    <div className="pop-exit" id="popExit">
-      <div className="pop-exit__container">
-        <div className="pop-exit__block">
-          <div className="pop-exit__ttl">
+    <SPopExite className="pop-exit" id="popExit">
+      <SPopExContainer>
+        <SPopExBlock>
+          <SPopExTtl>
             <h2>Выйти из аккаунта?</h2>
-          </div>
-          <div className="pop-exit__form-group">
-            <button className="pop-exit__exit-yes _hover01" onClick={handleExit}>
+          </SPopExTtl>
+          <SPopExFormGroup>
+            <SPopExBtnYes className="_hover01" onClick={handleExit}>
               Да, выйти
-            </button>
-            <button className="pop-exit__exit-no _hover03" onClick={closePopExit}>
+            </SPopExBtnYes>
+            <SPopExNo className="pop-exit__exit-no _hover03" onClick={closePopExit}>
               Нет, остаться
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+            </SPopExNo>
+          </SPopExFormGroup>
+        </SPopExBlock>
+      </SPopExContainer>
+    </SPopExite>
   );
 };

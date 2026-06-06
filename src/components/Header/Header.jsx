@@ -1,4 +1,17 @@
+import styled from "styled-components";
 import React, { useState } from 'react';
+import  { SHeader, 
+  SHeaderBlock, 
+  BtnMainNew, 
+  SHeaderNav, 
+  SHeaderUser, 
+  SHeaderPopUserSet, 
+  SHConteiner,
+  SPopUserSetName,
+  SPopUserSetMail,
+  SPopUserSetTheme,
+  PopUserCheckbox,
+  PopUserButton }  from './Header.styled';
 
 export const Header = () => {
   const [isUserPopOpen, setIsUserPopOpen] = useState(false);
@@ -13,43 +26,49 @@ export const Header = () => {
     setIsUserPopOpen(false);
   };
 
-  return (
-    <header className="header">
-      <div className="container">
-        <div className="header__block">
-          <div className="header__logo _show _light">
-            <a href="/" target="_self"><img src="./public/images/logo.png" alt="logo"/></a>
-          </div>
-          <div className="header__logo _dark">
-            <a href="/" target="_self"><img src="./public/images/logo_dark.png" alt="logo"/></a>
-          </div>
-          <nav className="header__nav">
-            <button className="header__btn-main-new _hover01" id="btnMainNew">
-              <a href="#popNewCard">Создать новую задачу</a>
-            </button>
-            <a href="#" className="header__user _hover02" onClick={toggleUserPop}>
-              Ivan Ivanov
-            </a>
-            {isUserPopOpen && (
-              <div className="header__pop-user-set pop-user-set" id="user-set-target">
-                <a href="#" className="pop-user-set__close" onClick={closeUserPop}>✕</a>
-                <p className="pop-user-set__name">Ivan Ivanov</p>
-                <p className="pop-user-set__mail">ivan.ivanov@gmail.com</p>
-                <div className="pop-user-set__theme">
-                  <p>Темная тема</p>
-                  <input type="checkbox" className="checkbox" name="checkbox"/>
-                </div>
-                <button type="button" className="_hover03" onClick={() => {
-  					closeUserPop();  
-  					window.location.hash = 'popExit';
-							}}>
-  							Выйти
-							</button>
-              </div>
-            )}
-          </nav>					
+return (
+  <SHeader className="header">
+    <SHConteiner className="container">
+      <SHeaderBlock>
+        <div className="header__logo _show _light">
+          <a href="/" target="_self">
+            <img src="./public/images/logo.png" alt="logo" />
+          </a>
         </div>
-      </div>			
-    </header>
-  );
+        <div className="header__logo _dark">
+          <a href="/" target="_self">
+            <img src="./public/images/logo_dark.png" alt="logo" />
+          </a>
+        </div>
+        <SHeaderNav className="header__nav">
+          <BtnMainNew className="_hover01" id="btnMainNew">
+            <a href="#popNewCard">Создать новую задачу</a>
+          </BtnMainNew>
+          <SHeaderUser href="#" className="_hover02" onClick={toggleUserPop}>
+            Ivan Ivanov
+          </SHeaderUser>
+          {isUserPopOpen && (
+            <SHeaderPopUserSet className="pop-user-set" id="user-set-target">
+              <a href="#" className="pop-user-set__close" onClick={closeUserPop}>✕</a>
+              <SPopUserSetName className="pop-user-set__name">Ivan Ivanov</SPopUserSetName>
+              <SPopUserSetMail className="pop-user-set__mail">ivan.ivanov@gmail.com</SPopUserSetMail>
+              <SPopUserSetTheme className="pop-user-set__theme">
+                <p>Темная тема</p>
+                <PopUserCheckbox type="checkbox" className="checkbox" name="checkbox" />
+              </SPopUserSetTheme>
+              <PopUserButton className="_hover03" type="button"
+                  onClick={() => {
+                  closeUserPop();
+                  window.location.hash = 'popExit';
+                }}
+              >
+                Выйти
+              </PopUserButton>
+            </SHeaderPopUserSet>
+          )}
+        </SHeaderNav>
+      </SHeaderBlock>
+    </SHConteiner>
+  </SHeader>
+);
 };
