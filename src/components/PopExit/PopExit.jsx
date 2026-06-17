@@ -1,24 +1,29 @@
-
 import React from 'react';
-import { SPopExite, 
-  SPopExContainer, 
-  SPopExBlock, SPopExTtl, 
-  SPopExFormGroup, 
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
+import {
+  SPopExite,
+  SPopExContainer,
+  SPopExBlock,
+  SPopExTtl,
+  SPopExFormGroup,
   SPopExBtnYes,
-  SPopExNo } from './PopExit.styled';
+  SPopExNo,
+} from './PopExit.styled';
 
 export const PopExit = () => {
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
   const closePopExit = (e) => {
     e.preventDefault();
-
     window.location.hash = '';
   };
 
   const handleExit = (e) => {
     e.preventDefault();
-
-    console.log('Выход из аккаунта');
-    window.location.hash = ''; 
+    logout();
+    navigate('/signin');
   };
 
   return (

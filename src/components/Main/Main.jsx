@@ -1,4 +1,5 @@
-// src/components/Main/Main.jsx
+
+import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 import React from 'react';
 import { Column } from '../Column/Column';
@@ -35,6 +36,7 @@ export const Main = ({ loading, groupedCards }) => {
             ))}
           </SMainContent>
         </SMainBlock>
+        <Outlet/>
       </SMConteiner>
     </SMain>
   );
