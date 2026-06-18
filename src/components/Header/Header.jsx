@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
 import {
   SHeader,
   SHeaderBlock,
@@ -17,10 +15,9 @@ import {
   PopUserButton,
 } from './Header.styled';
 
-export const Header = () => {
+
+export const Header = ({ onOpenModal }) => {
   const [isUserPopOpen, setIsUserPopOpen] = useState(false);
-  const { logout } = useAuth();
-  const navigate = useNavigate();
 
   const toggleUserPop = (e) => {
     e.preventDefault();
@@ -32,11 +29,11 @@ export const Header = () => {
     setIsUserPopOpen(false);
   };
 
-  const handleLogout = (e) => {
+
+  const handleLogoutClick = (e) => {
     e.preventDefault();
-    setIsUserPopOpen(false);
-    logout();
-    navigate('/signin');
+    setIsUserPopOpen(false);         
+    onOpenModal('exit');              
   };
 
   return (
@@ -73,10 +70,11 @@ export const Header = () => {
                   <p>Темная тема</p>
                   <PopUserCheckbox type="checkbox" className="checkbox" name="checkbox" />
                 </SPopUserSetTheme>
+
                 <PopUserButton
                   className="_hover03"
                   type="button"
-                  onClick={handleLogout}
+                  onClick={handleLogoutClick}
                 >
                   Выйти
                 </PopUserButton>

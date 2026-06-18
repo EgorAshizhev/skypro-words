@@ -11,13 +11,15 @@ import {
   SPopExNo,
 } from './PopExit.styled';
 
-export const PopExit = () => {
+export const PopExit = ({ isOpen, onClose }) => {
   const { logout } = useAuth();
   const navigate = useNavigate();
 
-  const closePopExit = (e) => {
-    e.preventDefault();
-    window.location.hash = '';
+  // НЕ рендерим вообще если закрыто — никакого display:none от глобального CSS
+  if (!isOpen) return null;
+
+  const handleBackdropClick = (e) => {
+    if (e.target === e.currentTarget) onClose();
   };
 
   const handleExit = (e) => {
@@ -27,19 +29,15 @@ export const PopExit = () => {
   };
 
   return (
-    <SPopExite className="pop-exit" id="popExit">
-      <SPopExContainer>
+    <SPopExite style={{ display: 'block' }}>
+      <SPopExContainer onClick={handleBackdropClick}>
         <SPopExBlock>
           <SPopExTtl>
             <h2>Выйти из аккаунта?</h2>
           </SPopExTtl>
           <SPopExFormGroup>
-            <SPopExBtnYes className="_hover01" onClick={handleExit}>
-              Да, выйти
-            </SPopExBtnYes>
-            <SPopExNo className="pop-exit__exit-no _hover03" onClick={closePopExit}>
-              Нет, остаться
-            </SPopExNo>
+            <SPopExBtnYes onClick={handleExit}>Да, выйти</SPopExBtnYes>
+            <SPopExNo onClick={onClose}>Нет, остаться</SPopExNo>
           </SPopExFormGroup>
         </SPopExBlock>
       </SPopExContainer>
