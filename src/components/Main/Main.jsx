@@ -1,9 +1,8 @@
-import { Outlet } from 'react-router-dom';
 import React from 'react';
 import { Column } from '../Column/Column';
 import { SMain, SMConteiner, SMainBlock, SMainContent } from './Main.styled';
 
-export const Main = ({ loading, groupedCards, onCardClick }) => {
+export const Main = ({ loading, groupedCards }) => {
   if (loading) {
     return (
       <div className="loading-container">
@@ -30,12 +29,10 @@ export const Main = ({ loading, groupedCards, onCardClick }) => {
                 key={title}
                 title={title}
                 cards={groupedCards[title] || []}
-                onCardClick={onCardClick}
               />
             ))}
           </SMainContent>
         </SMainBlock>
-        <Outlet />
       </SMConteiner>
     </SMain>
   );

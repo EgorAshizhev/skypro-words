@@ -81,13 +81,6 @@ const GlobalStyle = createGlobalStyle`
     color: #ffffff;
   }
 
-  .pop-user-set:target,
-  .pop-exit:target,
-  .pop-new-card:target,
-  .pop-browse:target {
-    display: block;
-  }
-
   ._orange {
     background-color: #ffe4c2;
     color: #ff6d00;

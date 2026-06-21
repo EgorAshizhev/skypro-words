@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   SHeader,
   SHeaderBlock,
@@ -15,9 +16,9 @@ import {
   PopUserButton,
 } from './Header.styled';
 
-
-export const Header = ({ onOpenModal }) => {
+export const Header = () => {
   const [isUserPopOpen, setIsUserPopOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleUserPop = (e) => {
     e.preventDefault();
@@ -29,11 +30,15 @@ export const Header = ({ onOpenModal }) => {
     setIsUserPopOpen(false);
   };
 
+  const handleNewCardClick = (e) => {
+    e.preventDefault();
+    navigate('/task/new');
+  };
 
   const handleLogoutClick = (e) => {
     e.preventDefault();
-    setIsUserPopOpen(false);         
-    onOpenModal('exit');              
+    setIsUserPopOpen(false);          
+    navigate('/exit');                
   };
 
   return (
@@ -52,7 +57,7 @@ export const Header = ({ onOpenModal }) => {
           </div>
           <SHeaderNav className="header__nav">
             <BtnMainNew className="_hover01" id="btnMainNew">
-              <a href="#popNewCard">Создать новую задачу</a>
+              <a href="/task/new" onClick={handleNewCardClick}>Создать новую задачу</a>
             </BtnMainNew>
             <SHeaderUser href="#" className="_hover02" onClick={toggleUserPop}>
               Ivan Ivanov
@@ -70,7 +75,6 @@ export const Header = ({ onOpenModal }) => {
                   <p>Темная тема</p>
                   <PopUserCheckbox type="checkbox" className="checkbox" name="checkbox" />
                 </SPopUserSetTheme>
-
                 <PopUserButton
                   className="_hover03"
                   type="button"

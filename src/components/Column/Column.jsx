@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   SColumnTitleP,
   SColumnTitle,
@@ -25,7 +26,9 @@ const getThemeClass = (topic) => {
   return map[topic] || '_gray';
 };
 
-export const Column = ({ title, cards = [], onCardClick }) => {
+export const Column = ({ title, cards = [] }) => {
+  const navigate = useNavigate();
+
   return (
     <SMainColumn>
       <SColumnTitle className="column__title">
@@ -36,7 +39,7 @@ export const Column = ({ title, cards = [], onCardClick }) => {
           <SCardsItem key={card.id} className="cards__item">
             <SCardsCard
               className="cards__card"
-              onClick={() => onCardClick?.(card)}
+              onClick={() => navigate(`/task/${card.id}`)}
               style={{ cursor: 'pointer' }}
             >
               <SCardsGroup className="card__group">

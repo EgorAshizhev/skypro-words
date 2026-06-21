@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import {
   SPopNewCard,
   SNewCardContainer,
@@ -25,12 +26,15 @@ const CATEGORIES = [
   { label: 'Copywriting', cls: '_purple' },
 ];
 
-export const PopNewCard = ({ isOpen, onClose, onCreate }) => {
+export const PopNewCard = () => {
+  const navigate = useNavigate();
+  const { onCreateCard } = useOutletContext();
+
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [activeCategory, setActiveCategory] = useState('Web Design');
 
-  if (!isOpen) return null;
+  const onClose = () => navigate('/');
 
   const handleBackdropClick = (e) => {
     if (e.target === e.currentTarget) onClose();
@@ -38,21 +42,18 @@ export const PopNewCard = ({ isOpen, onClose, onCreate }) => {
 
   const handleCreate = () => {
     if (!title.trim()) return;
-    onCreate?.({
+    onCreateCard?.({
       title: title.trim(),
       description: description.trim(),
       topic: activeCategory,
       status: 'Без статуса',
       date: new Date().toLocaleDateString('ru-RU'),
     });
-    // Сброс формы
-    setTitle('');
-    setDescription('');
-    setActiveCategory('Web Design');
+    onClose();
   };
 
   return (
-    <SPopNewCard className="pop-new-card" style={{ display: 'block', position: 'fixed' }}>
+    <SPopNewCard className="pop-new-card">
       <SNewCardContainer className="pop-new-card__container" onClick={handleBackdropClick}>
         <SNewCardBlock className="pop-new-card__block">
           <SNewCardContent className="pop-new-card__content">
@@ -96,7 +97,7 @@ export const PopNewCard = ({ isOpen, onClose, onCreate }) => {
                 </SNewCardFormNewBlock>
               </SNewCardForm>
               <div className="pop-new-card__calendar calendar">
-                {/* Calendar component goes here */}
+
               </div>
             </SNewCardWrap>
             <SPopCategories className="pop-new-card__categories categories">

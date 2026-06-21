@@ -1,21 +1,14 @@
 import styled from 'styled-components';
 
 export const SPopExite = styled.div`
-  /* Глобальный CSS задаёт display: none для .pop-exit */
-  /* Переопределяем через !important чтобы inline style + fixed работали */
-  display: none;
   width: 100%;
   height: 100%;
   min-width: 320px;
   min-height: 100vh;
-  position: fixed !important;
+  position: fixed;
   top: 0;
   left: 0;
   z-index: 10;
-
-  &[style*="display: block"] {
-    display: block !important;
-  }
 `;
 
 export const SPopExContainer = styled.div`

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams, useOutletContext } from 'react-router-dom';
 import {
   SPopBrowse,
   SPopBroContainer,
@@ -43,7 +44,12 @@ const getCategoryClass = (topic) => {
   return map[topic] || '_gray';
 };
 
-export const PopBrowse = ({ isOpen, onClose, card, onDelete, onSave }) => {
+export const PopBrowse = () => {
+  const navigate = useNavigate();
+  const { cardId } = useParams();
+  const { cards, onSaveCard, onDeleteCard } = useOutletContext();
+  const card = cards.find((c) => String(c.id) === String(cardId));
+
   const [isEditing, setIsEditing] = useState(false);
   const [description, setDescription] = useState('');
   const [status, setStatus] = useState('');
@@ -56,7 +62,18 @@ export const PopBrowse = ({ isOpen, onClose, card, onDelete, onSave }) => {
     setIsEditing(false);
   }, [card]);
 
-  if (!isOpen || !card) return null;
+
+  useEffect(() => {
+    if (!card) {
+      navigate('/', { replace: true });
+    }
+  }, [card, navigate]);
+
+  if (!card) {
+    return null;
+  }
+
+  const onClose = () => navigate('/');
 
   const handleBackdropClick = (e) => {
     if (e.target === e.currentTarget) onClose();
@@ -71,12 +88,12 @@ export const PopBrowse = ({ isOpen, onClose, card, onDelete, onSave }) => {
   };
 
   const handleSave = () => {
-    onSave?.({ ...card, description, status });
+    onSaveCard?.({ ...card, description, status });
     setIsEditing(false);
   };
 
   const handleDelete = () => {
-    onDelete?.(card.id);
+    onDeleteCard?.(card.id);
     onClose();
   };
 

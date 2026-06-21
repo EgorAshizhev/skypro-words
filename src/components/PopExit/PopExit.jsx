@@ -8,15 +8,14 @@ import {
   SPopExTtl,
   SPopExFormGroup,
   SPopExBtnYes,
-  SPopExNo,
+  SPopExNo
 } from './PopExit.styled';
 
-export const PopExit = ({ isOpen, onClose }) => {
+export const PopExit = () => {
   const { logout } = useAuth();
   const navigate = useNavigate();
 
-  // НЕ рендерим вообще если закрыто — никакого display:none от глобального CSS
-  if (!isOpen) return null;
+  const onClose = () => navigate('/');
 
   const handleBackdropClick = (e) => {
     if (e.target === e.currentTarget) onClose();
@@ -29,7 +28,7 @@ export const PopExit = ({ isOpen, onClose }) => {
   };
 
   return (
-    <SPopExite style={{ display: 'block' }}>
+    <SPopExite>
       <SPopExContainer onClick={handleBackdropClick}>
         <SPopExBlock>
           <SPopExTtl>
