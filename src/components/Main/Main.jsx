@@ -1,5 +1,3 @@
-// src/components/Main/Main.jsx
-import styled from 'styled-components';
 import React from 'react';
 import { Column } from '../Column/Column';
 import { SMain, SMConteiner, SMainBlock, SMainContent } from './Main.styled';

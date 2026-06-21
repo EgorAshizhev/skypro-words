@@ -1,7 +1,8 @@
 import React from 'react';
-import { 
-  SColumnTitleP, 
-  SColumnTitle, 
+import { useNavigate } from 'react-router-dom';
+import {
+  SColumnTitleP,
+  SColumnTitle,
   SMainColumn,
   SCards,
   SCardsItem,
@@ -11,7 +12,8 @@ import {
   SCardsBtn,
   SCardTitle,
   SCardContent,
-  SCardDate  } from './Column.styled';
+  SCardDate,
+} from './Column.styled';
 
 const getThemeClass = (topic) => {
   const map = {
@@ -25,15 +27,21 @@ const getThemeClass = (topic) => {
 };
 
 export const Column = ({ title, cards = [] }) => {
+  const navigate = useNavigate();
+
   return (
     <SMainColumn>
       <SColumnTitle className="column__title">
         <SColumnTitleP>{title}</SColumnTitleP>
       </SColumnTitle>
-      <SCards  className="cards">
+      <SCards className="cards">
         {cards.map((card) => (
           <SCardsItem key={card.id} className="cards__item">
-            <SCardsCard className="cards__card">
+            <SCardsCard
+              className="cards__card"
+              onClick={() => navigate(`/task/${card.id}`)}
+              style={{ cursor: 'pointer' }}
+            >
               <SCardsGroup className="card__group">
                 <SCardsTheme className={`card__theme ${getThemeClass(card.topic)}`}>
                   <p>{card.topic}</p>
@@ -56,7 +64,7 @@ export const Column = ({ title, cards = [] }) => {
             </SCardsCard>
           </SCardsItem>
         ))}
-      </SCards >
+      </SCards>
     </SMainColumn>
   );
 };

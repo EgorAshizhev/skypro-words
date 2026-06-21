@@ -1,40 +1,42 @@
-
 import React from 'react';
-import { SPopExite, 
-  SPopExContainer, 
-  SPopExBlock, SPopExTtl, 
-  SPopExFormGroup, 
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
+import {
+  SPopExite,
+  SPopExContainer,
+  SPopExBlock,
+  SPopExTtl,
+  SPopExFormGroup,
   SPopExBtnYes,
-  SPopExNo } from './PopExit.styled';
+  SPopExNo
+} from './PopExit.styled';
 
 export const PopExit = () => {
-  const closePopExit = (e) => {
-    e.preventDefault();
+  const { logout } = useAuth();
+  const navigate = useNavigate();
 
-    window.location.hash = '';
+  const onClose = () => navigate('/');
+
+  const handleBackdropClick = (e) => {
+    if (e.target === e.currentTarget) onClose();
   };
 
   const handleExit = (e) => {
     e.preventDefault();
-
-    console.log('Выход из аккаунта');
-    window.location.hash = ''; 
+    logout();
+    navigate('/signin');
   };
 
   return (
-    <SPopExite className="pop-exit" id="popExit">
-      <SPopExContainer>
+    <SPopExite>
+      <SPopExContainer onClick={handleBackdropClick}>
         <SPopExBlock>
           <SPopExTtl>
             <h2>Выйти из аккаунта?</h2>
           </SPopExTtl>
           <SPopExFormGroup>
-            <SPopExBtnYes className="_hover01" onClick={handleExit}>
-              Да, выйти
-            </SPopExBtnYes>
-            <SPopExNo className="pop-exit__exit-no _hover03" onClick={closePopExit}>
-              Нет, остаться
-            </SPopExNo>
+            <SPopExBtnYes onClick={handleExit}>Да, выйти</SPopExBtnYes>
+            <SPopExNo onClick={onClose}>Нет, остаться</SPopExNo>
           </SPopExFormGroup>
         </SPopExBlock>
       </SPopExContainer>

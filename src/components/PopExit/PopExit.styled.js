@@ -1,22 +1,19 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const SPopExite = styled.div`
-  display: none;
   width: 100%;
   height: 100%;
   min-width: 320px;
   min-height: 100vh;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
-  z-index: 5;
+  z-index: 10;
 `;
-
 
 export const SPopExContainer = styled.div`
   width: 100%;
-  height: 100%;
-  min-height: 100vh;
+  height: 100vh;
   padding: 0 16px;
   display: flex;
   flex-direction: column;
@@ -28,13 +25,17 @@ export const SPopExContainer = styled.div`
 export const SPopExBlock = styled.div`
   display: block;
   margin: 0 auto;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   max-width: 370px;
   width: 100%;
   padding: 50px 60px;
   border-radius: 10px;
-  border: 0.7px solid #D4DBE5;
+  border: 0.7px solid #d4dbe5;
   box-shadow: 0px 4px 67px -12px rgba(0, 0, 0, 0.13);
+
+  @media (max-width: 375px) {
+    padding: 50px 20px;
+  }
 `;
 
 export const SPopExTtl = styled.div`
@@ -44,6 +45,12 @@ export const SPopExTtl = styled.div`
   line-height: 30px;
   letter-spacing: -0.4px;
   margin-bottom: 20px;
+
+  h2 {
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+  }
 `;
 
 export const SPopExFormGroup = styled.div`
@@ -51,12 +58,17 @@ export const SPopExFormGroup = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 10px;
+
+  @media (max-width: 375px) {
+    flex-direction: column;
+  }
 `;
 
 export const SPopExBtnYes = styled.button`
-  width: 153px;
-  height: 30px;
-  background-color: #565EEF;
+  flex: 1;
+  height: 40px;
+  background-color: #565eef;
   border-radius: 4px;
   border: none;
   outline: none;
@@ -64,42 +76,44 @@ export const SPopExBtnYes = styled.button`
   align-items: center;
   justify-content: center;
   font-size: 14px;
-  line-height: 21px;
   font-weight: 500;
   letter-spacing: -0.14px;
-  color: #FFFFFF;
-  margin-right: 10px;
-  & a {
-  width: 100%;
-  height: 100%;
-  color: #FFFFFF;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #33399b;
+  }
+
+  @media (max-width: 375px) {
+    width: 100%;
   }
 `;
 
 export const SPopExNo = styled.button`
-  width: 153px;
-  height: 30px;
-  background-color: #a6abfe;
+  flex: 1;
+  height: 40px;
+  background-color: transparent;
   border-radius: 4px;
-  border: 0.7px solid var(--palette-navy-60, #565EEF);
+  border: 1.5px solid #565eef;
   outline: none;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 14px;
-  line-height: 21px;
   font-weight: 500;
   letter-spacing: -0.14px;
-  color: #FFFFFF;
-  & a {
-  width: 100%;
-  height: 100%;
-  color: #565EEF;
-  display: flex;
-  align-items: center;
-  justify-content: center; 
+  color: #565eef;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+
+  &:hover {
+    background-color: #565eef;
+    color: #ffffff;
+  }
+
+  @media (max-width: 375px) {
+    width: 100%;
   }
 `;
