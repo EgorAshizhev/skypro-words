@@ -1,15 +1,9 @@
 const BASE_URL = 'https://wedev-api.sky.pro/api';
 
-// Эндпоинты авторизации не принимают Content-Type: application/json
-const AUTH_ENDPOINTS = ['/user/login', '/user'];
-
 export const request = async (endpoint, options = {}) => {
   const token = localStorage.getItem('token');
-  const isAuthEndpoint = AUTH_ENDPOINTS.includes(endpoint);
 
   const headers = {
-    // Content-Type не передаём для auth-эндпоинтов
-    ...(!isAuthEndpoint ? { 'Content-Type': 'application/json' } : {}),
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
     ...options.headers,
   };
