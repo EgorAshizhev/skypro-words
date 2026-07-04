@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useTasks } from '../../context/TaskContext';
 import {
   SPopNewCard,
   SNewCardContainer,
@@ -28,7 +29,7 @@ const CATEGORIES = [
 
 export const PopNewCard = () => {
   const navigate = useNavigate();
-  const { onCreateCard } = useOutletContext();
+  const { createCard } = useTasks();
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -47,7 +48,7 @@ export const PopNewCard = () => {
     setIsLoading(true);
     setError('');
     try {
-      await onCreateCard?.({
+      await createCard({
         title: title.trim(),
         description: description.trim(),
         topic: activeCategory,

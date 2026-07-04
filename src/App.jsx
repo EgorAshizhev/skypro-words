@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { createGlobalStyle } from 'styled-components';
 import { AuthProvider } from './context/AuthContext';
+import { TaskProvider } from './context/TaskContext';
 import { AppRoutes } from './components/AppRoutes';
 
 const GlobalStyle = createGlobalStyle`
@@ -324,7 +325,9 @@ export const App = () => {
     <>
       <GlobalStyle />
         <AuthProvider>
-          <AppRoutes />
+          <TaskProvider>
+            <AppRoutes />
+          </TaskProvider>
         </AuthProvider>
     </>
   );

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams, useOutletContext } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useTasks } from '../../context/TaskContext';
 import {
   SPopBrowse,
   SPopBroContainer,
@@ -56,8 +57,8 @@ const formatDate = (dateStr) => {
 export const PopBrowse = () => {
   const navigate = useNavigate();
   const { cardId } = useParams();
-  const { cards, onSaveCard, onDeleteCard } = useOutletContext();
-  const card = cards.find((c) => String(c.id) === String(cardId));
+  const { tasks, saveCard, deleteCard } = useTasks();
+  const card = tasks.find((c) => String(c.id) === String(cardId));
 
   const [isEditing, setIsEditing] = useState(false);
   const [description, setDescription] = useState('');
@@ -101,7 +102,7 @@ export const PopBrowse = () => {
     setIsSaving(true);
     setError('');
     try {
-      await onSaveCard?.({ ...card, description, status });
+      await saveCard({ ...card, description, status });
       setIsEditing(false);
     } catch (err) {
       setError(err.message || 'Не удалось сохранить задачу');
@@ -113,7 +114,7 @@ export const PopBrowse = () => {
   const handleDelete = async () => {
     setError('');
     try {
-      await onDeleteCard?.(card.id);
+      await deleteCard(card.id);
       onClose();
     } catch (err) {
       setError(err.message || 'Не удалось удалить задачу');
