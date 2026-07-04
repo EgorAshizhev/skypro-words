@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -10,15 +9,16 @@ import {
   SHeaderPopUserSet,
   SHConteiner,
   SPopUserSetName,
-  SPopUserSetMail,
   SPopUserSetTheme,
   PopUserCheckbox,
   PopUserButton,
 } from './Header.styled';
+import { useAuth } from '../../context/AuthContext';
 
 export const Header = () => {
   const [isUserPopOpen, setIsUserPopOpen] = useState(false);
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   const toggleUserPop = (e) => {
     e.preventDefault();
@@ -37,8 +37,8 @@ export const Header = () => {
 
   const handleLogoutClick = (e) => {
     e.preventDefault();
-    setIsUserPopOpen(false);          
-    navigate('/exit');                
+    setIsUserPopOpen(false);
+    navigate('/exit');
   };
 
   return (
@@ -60,17 +60,16 @@ export const Header = () => {
               <a href="/task/new" onClick={handleNewCardClick}>Создать новую задачу</a>
             </BtnMainNew>
             <SHeaderUser href="#" className="_hover02" onClick={toggleUserPop}>
-              Ivan Ivanov
+              {user?.name || 'Пользователь'}
             </SHeaderUser>
             {isUserPopOpen && (
               <SHeaderPopUserSet className="pop-user-set" id="user-set-target">
                 <a href="#" className="pop-user-set__close" onClick={closeUserPop}>
                   ✕
                 </a>
-                <SPopUserSetName className="pop-user-set__name">Ivan Ivanov</SPopUserSetName>
-                <SPopUserSetMail className="pop-user-set__mail">
-                  ivan.ivanov@gmail.com
-                </SPopUserSetMail>
+                <SPopUserSetName className="pop-user-set__name">
+                  {user?.name || '—'}
+                </SPopUserSetName>
                 <SPopUserSetTheme className="pop-user-set__theme">
                   <p>Темная тема</p>
                   <PopUserCheckbox type="checkbox" className="checkbox" name="checkbox" />

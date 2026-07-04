@@ -1,36 +1,61 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Header } from '../../components/Header/Header';
 import { Main } from '../../components/Main/Main';
-import { cardList as initialCardList } from '../../data';
+import { fetchTasks, createTask, updateTask, deleteTask } from '../../services/tasksService';
 
 export const MainPage = () => {
   const [loading, setLoading] = useState(true);
-  const [cards, setCards] = useState(initialCardList);
+  const [error, setError] = useState('');
+  const [cards, setCards] = useState([]);
 
-  useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 2000);
-    return () => clearTimeout(timer);
+  const loadTasks = useCallback(async () => {
+    setLoading(true);
+    setError('');
+    try {
+      const data = await fetchTasks();
+      // Normalise: API uses _id, components expect id
+      setCards(data.tasks.map((t) => ({ ...t, id: t._id })));
+    } catch (err) {
+      setError(err.message || 'Не удалось загрузить задачи');
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
-  // Сохранение изменений карточки
-  const handleSaveCard = (updatedCard) => {
-    setCards((prev) =>
-      prev.map((c) => (c.id === updatedCard.id ? updatedCard : c))
-    );
+  useEffect(() => {
+    loadTasks();
+  }, [loadTasks]);
+
+  // Сохранение изменений карточки через API
+  const handleSaveCard = async (updatedCard) => {
+    try {
+      const { id, _id, userId, ...taskData } = updatedCard;
+      const data = await updateTask(id, taskData);
+      setCards(data.tasks.map((t) => ({ ...t, id: t._id })));
+    } catch (err) {
+      setError(err.message || 'Не удалось обновить задачу');
+    }
   };
 
-  // Удаление карточки
-  const handleDeleteCard = (cardId) => {
-    setCards((prev) => prev.filter((c) => c.id !== cardId));
+  // Удаление карточки через API
+  const handleDeleteCard = async (cardId) => {
+    try {
+      const data = await deleteTask(cardId);
+      setCards(data.tasks.map((t) => ({ ...t, id: t._id })));
+    } catch (err) {
+      setError(err.message || 'Не удалось удалить задачу');
+    }
   };
 
-  // Создание новой карточки
-  const handleCreateCard = (newCard) => {
-    setCards((prev) => [
-      ...prev,
-      { ...newCard, id: Date.now() },
-    ]);
+  // Создание новой карточки через API
+  const handleCreateCard = async (newCard) => {
+    try {
+      const data = await createTask(newCard);
+      setCards(data.tasks.map((t) => ({ ...t, id: t._id })));
+    } catch (err) {
+      setError(err.message || 'Не удалось создать задачу');
+    }
   };
 
   const groupedCards = cards.reduce((acc, card) => {
@@ -45,11 +70,11 @@ export const MainPage = () => {
 
       <Main
         loading={loading}
+        error={error}
         groupedCards={groupedCards}
+        onRetry={loadTasks}
       />
 
-      {/* Сюда react-router подставит PopNewCard / PopBrowse / PopExit
-          в зависимости от текущего URL (см. AppRoutes.jsx) */}
       <Outlet
         context={{
           cards,

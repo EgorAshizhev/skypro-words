@@ -15,17 +15,31 @@ import {
 
 export const SignUpPage = () => {
   const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
-  const { login } = useAuth();
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { register } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Simple mock registration — replace with real API call
-    if (name && email && password) {
-      login();
+    setError('');
+
+    if (!name.trim() || !login.trim() || !password.trim()) {
+      setError('Заполните все поля');
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      await register(login.trim(), name.trim(), password);
       navigate('/');
+    } catch (err) {
+      setError(err.message || 'Ошибка регистрации. Попробуйте другой логин.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -45,14 +59,16 @@ export const SignUpPage = () => {
                 placeholder="Имя"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                disabled={isLoading}
               />
               <SModalInput
                 type="text"
                 name="login"
                 id="loginReg"
-                placeholder="Эл. почта"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Логин"
+                value={login}
+                onChange={(e) => setLogin(e.target.value)}
+                disabled={isLoading}
               />
               <SModalInput
                 type="password"
@@ -61,8 +77,16 @@ export const SignUpPage = () => {
                 placeholder="Пароль"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                disabled={isLoading}
               />
-              <SModalBtnSignUp type="submit">Зарегистрироваться</SModalBtnSignUp>
+              {error && (
+                <p style={{ color: '#e53e3e', fontSize: '14px', marginBottom: '8px' }}>
+                  {error}
+                </p>
+              )}
+              <SModalBtnSignUp type="submit" disabled={isLoading}>
+                {isLoading ? 'Регистрация...' : 'Зарегистрироваться'}
+              </SModalBtnSignUp>
               <SModalFormGroup>
                 <p>
                   Уже есть аккаунт? <Link to="/signin">Войдите здесь</Link>

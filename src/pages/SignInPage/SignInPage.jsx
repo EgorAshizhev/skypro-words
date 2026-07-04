@@ -14,17 +14,31 @@ import {
 } from './SignInPage.styled';
 
 export const SignInPage = () => {
-  const [email, setEmail] = useState('');
+  const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
-  const { login } = useAuth();
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { login: authLogin } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Simple mock auth — replace with real API call
-    if (email && password) {
-      login();
+    setError('');
+
+    if (!login.trim() || !password.trim()) {
+      setError('Заполните все поля');
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      await authLogin(login.trim(), password);
       navigate('/');
+    } catch (err) {
+      setError(err.message || 'Неверный логин или пароль');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -41,9 +55,10 @@ export const SignInPage = () => {
                 type="text"
                 name="login"
                 id="formlogin"
-                placeholder="Эл. почта"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Логин"
+                value={login}
+                onChange={(e) => setLogin(e.target.value)}
+                disabled={isLoading}
               />
               <SModalInput
                 type="password"
@@ -52,8 +67,16 @@ export const SignInPage = () => {
                 placeholder="Пароль"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                disabled={isLoading}
               />
-              <SModalBtnEnter type="submit">Войти</SModalBtnEnter>
+              {error && (
+                <p style={{ color: '#e53e3e', fontSize: '14px', marginBottom: '8px' }}>
+                  {error}
+                </p>
+              )}
+              <SModalBtnEnter type="submit" disabled={isLoading}>
+                {isLoading ? 'Вход...' : 'Войти'}
+              </SModalBtnEnter>
               <SModalFormGroup>
                 <p>Нужно зарегистрироваться?</p>
                 <Link to="/signup">Регистрируйтесь здесь</Link>
