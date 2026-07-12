@@ -19,19 +19,19 @@ export const SPopExContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.4);
+  background: ${({ theme }) => theme.colors.overlay};
 `;
 
 export const SPopExBlock = styled.div`
   display: block;
   margin: 0 auto;
-  background-color: #ffffff;
+  background-color: ${({ theme }) => theme.colors.modalBg};
   max-width: 370px;
   width: 100%;
   padding: 50px 60px;
   border-radius: 10px;
-  border: 0.7px solid #d4dbe5;
-  box-shadow: 0px 4px 67px -12px rgba(0, 0, 0, 0.13);
+  border: 0.7px solid ${({ theme }) => theme.colors.borderStrong};
+  box-shadow: ${({ theme }) => theme.colors.shadow};
 
   @media (max-width: 375px) {
     padding: 50px 20px;
@@ -45,6 +45,7 @@ export const SPopExTtl = styled.div`
   line-height: 30px;
   letter-spacing: -0.4px;
   margin-bottom: 20px;
+  color: ${({ theme }) => theme.colors.text};
 
   h2 {
     font-size: inherit;

@@ -5,7 +5,7 @@ export const SWrapper = styled.div`
   height: 100%;
   overflow-x: hidden;
   overflow-y: scroll;
-  background-color: #eaeef6;
+  background-color: ${({ theme }) => theme.colors.pageBg};
 `;
 
 export const SContainerSignUp = styled.div`
@@ -29,13 +29,18 @@ export const SModal = styled.div`
 export const SModalBlock = styled.div`
   display: block;
   margin: 0 auto;
-  background-color: #ffffff;
+  background-color: ${({ theme }) => theme.colors.modalBg};
   max-width: 368px;
   width: 100%;
   padding: 50px 60px;
   border-radius: 10px;
-  border: 0.7px solid #d4dbe5;
-  box-shadow: 0px 4px 67px -12px rgba(0, 0, 0, 0.13);
+  border: 0.7px solid ${({ theme }) => theme.colors.borderStrong};
+  box-shadow: ${({ theme }) => theme.colors.shadow};
+
+  @media screen and (max-width: 495px) {
+    max-width: 100%;
+    padding: 40px 24px;
+  }
 
   @media screen and (max-width: 375px) {
     padding: 0 16px;
@@ -53,6 +58,7 @@ export const SModalTtl = styled.div`
     line-height: 30px;
     letter-spacing: -0.6px;
     margin-bottom: 20px;
+    color: ${({ theme }) => theme.colors.text};
   }
 `;
 
@@ -72,7 +78,7 @@ export const SModalInput = styled.input`
   width: 100%;
   min-width: 100%;
   border-radius: 8px;
-  border: 0.7px solid rgba(148, 166, 190, 0.4);
+  border: 0.7px solid ${({ theme }) => theme.colors.border};
   outline: none;
   padding: 10px 8px;
   font-family: 'Roboto', sans-serif;
@@ -80,9 +86,11 @@ export const SModalInput = styled.input`
   font-size: 14px;
   line-height: 21px;
   letter-spacing: -0.28px;
+  background-color: ${({ theme }) => theme.colors.inputBgActive};
+  color: ${({ theme }) => theme.colors.text};
 
   &::placeholder {
-    color: #94a6be;
+    color: ${({ theme }) => theme.colors.textMuted};
   }
 `;
 
@@ -119,7 +127,7 @@ export const SModalFormGroup = styled.div`
 
   p,
   a {
-    color: rgba(148, 166, 190, 0.8);
+    color: ${({ theme }) => theme.colors.textMuted};
     font-size: 14px;
     font-weight: 400;
     line-height: 150%;

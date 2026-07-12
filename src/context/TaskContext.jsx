@@ -45,6 +45,29 @@ export const TaskProvider = ({ children }) => {
     return data;
   };
 
+  // Переместить задачу между колонками (drag-and-drop).
+  // Обновляем локальное состояние сразу (оптимистично),
+  // а запрос на сервер уходит в фоне. При ошибке — откатываем.
+  const moveCard = async (cardId, newStatus) => {
+    const prevTasks = tasks;
+    const card = tasks.find((t) => String(t.id) === String(cardId));
+    if (!card || card.status === newStatus) return;
+
+    setTasks((prev) =>
+      prev.map((t) => (String(t.id) === String(cardId) ? { ...t, status: newStatus } : t))
+    );
+
+    try {
+      const { id, _id, userId, ...taskData } = card;
+      const data = await updateTask(cardId, { ...taskData, status: newStatus });
+      setTasks(data.tasks.map((t) => ({ ...t, id: t._id })));
+    } catch (err) {
+      // откат при ошибке сети/сервера
+      setTasks(prevTasks);
+      setError(err.message || 'Не удалось переместить задачу');
+    }
+  };
+
   return (
     <TaskContext.Provider
       value={{
@@ -55,6 +78,7 @@ export const TaskProvider = ({ children }) => {
         createCard,
         saveCard,
         deleteCard,
+        moveCard,
       }}
     >
       {children}
