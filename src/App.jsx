@@ -1,4 +1,3 @@
-import React from 'react';
 import { createGlobalStyle } from 'styled-components';
 import { AppThemeProvider } from './context/ThemeContext';
 import { AuthProvider } from './context/AuthContext';

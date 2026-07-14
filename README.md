@@ -1,16 +1,105 @@
-# React + Vite
+# SkyPro Kanban
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Kanban-доска для управления задачами: авторизация пользователей, создание/редактирование/удаление карточек, перетаскивание задач между статусами (drag & drop) и адаптивная вёрстка.
 
-Currently, two official plugins are available:
+## Возможности
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- 🔐 Регистрация и вход, защищённые маршруты (доступ к доске только для авторизованных пользователей)
+- 🗂️ Доска с колонками по статусам: «Без статуса», «Нужно сделать», «В работе», «Тестирование», «Готово»
+- 🖱️ Перетаскивание карточек между колонками (`@hello-pangea/dnd`)
+- ➕ Создание новой задачи, просмотр и редактирование карточки во всплывающих окнах
+- 🎨 Тема оформления через `styled-components` (light/dark — если применимо)
+- 📱 Адаптивная вёрстка под мобильные и планшетные экраны
+
+## Стек технологий
+
+- [React](https://react.dev/)
+- [Vite](https://vite.dev/)
+- [React Router](https://reactrouter.com/) — маршрутизация и защищённые роуты
+- [styled-components](https://styled-components.com/) — стилизация компонентов
+- [@hello-pangea/dnd](https://github.com/hello-pangea/dnd) — drag & drop
+- ESLint — контроль качества кода
+
+## Структура проекта
+
+```
+src/
+├── components/
+│   ├── Main/              # Основной блок доски с колонками
+│   ├── Column/             # Колонка статуса задач
+│   ├── AppRoutes/
+│   │   ├── ProtectedRoute/ # Обёртка для приватных маршрутов
+│   │   ├── PopNewCard/     # Попап создания задачи
+│   │   ├── PopBrowse/      # Попап просмотра/редактирования задачи
+│   │   └── PopExit/        # Попап подтверждения выхода
+├── pages/
+│   ├── MainPage/
+│   ├── SignInPage/
+│   ├── SignUpPage/
+│   └── NotFoundPage/
+├── context/
+│   └── TaskContext.jsx     # Глобальное состояние задач (загрузка, перемещение карточек)
+└── ...
+```
+
+> Структура выше приведена частично — дополните её актуальными папками (например, `hooks/`, `services/`, `utils/`), если они есть в проекте.
+
+## Установка и запуск
+
+Клонируйте репозиторий и установите зависимости:
+
+```bash
+git clone <ссылка-на-репозиторий>
+cd <папка-проекта>
+npm install
+```
+
+### Режим разработки
+
+```bash
+npm run dev
+```
+
+Приложение будет доступно по адресу [http://localhost:5173](http://localhost:5173) (порт может отличаться, см. вывод в консоли).
+
+### Сборка проекта
+
+```bash
+npm run build
+```
+
+Собранные файлы появятся в папке `dist/`.
+
+### Предпросмотр production-сборки
+
+```bash
+npm run preview
+```
+
+### Проверка кода линтером
+
+```bash
+npm run lint
+```
+
+## Работа с API
+
+Приложение обращается к серверу для авторизации и работы с задачами. Укажите базовый URL API в переменных окружения (например, в файле `.env`):
+
+```
+VITE_API_BASE_URL=<адрес вашего API>
+```
+
+> Если бэкенд не используется отдельно от фронтенда или его адрес фиксирован в коде — уберите этот раздел или уточните детали (эндпоинты, формат запросов).
 
 ## React Compiler
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+React Compiler не подключён в этом шаблоне из-за влияния на производительность dev-сборки и билда. Инструкция по подключению — в [официальной документации](https://react.dev/learn/react-compiler/installation).
 
-## Expanding the ESLint configuration
+## Расширение конфигурации ESLint
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Для production-приложений рекомендуется использовать TypeScript с включёнными type-aware правилами линтинга. Подробнее — в [TS-шаблоне Vite](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) и документации [`typescript-eslint`](https://typescript-eslint.io).
+
+## Лицензия
+
+Укажите лицензию проекта (например, MIT) или уберите этот раздел, если лицензия не определена.

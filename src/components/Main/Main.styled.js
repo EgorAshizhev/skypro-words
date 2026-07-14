@@ -57,6 +57,12 @@ export const SLoadingText = styled.div`
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 `;
 
+export const SEmptyContainer = styled(SLoadingContainer)``;
+
+export const SEmptyText = styled(SLoadingText)`
+  color: ${({ theme }) => theme.colors.textMuted};
+`;
+
 export const SErrorText = styled.p`
   color: ${({ theme }) => theme.colors.danger};
   margin-bottom: 16px;

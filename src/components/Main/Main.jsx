@@ -9,6 +9,8 @@ import {
   SMainContent,
   SLoadingContainer,
   SLoadingText,
+  SEmptyContainer,
+  SEmptyText,
   SErrorText,
   SRetryBtn,
 } from './Main.styled';
@@ -40,6 +42,18 @@ export const Main = ({ loading, error, groupedCards, onRetry }) => {
           {onRetry && <SRetryBtn onClick={onRetry}>Повторить</SRetryBtn>}
         </div>
       </SLoadingContainer>
+    );
+  }
+
+  const hasCards = Object.values(groupedCards).some(
+    (cards) => Array.isArray(cards) && cards.length > 0
+  );
+
+  if (!hasCards) {
+    return (
+      <SEmptyContainer className="empty-container">
+        <SEmptyText className="empty-text">Здесь пока нет задач</SEmptyText>
+      </SEmptyContainer>
     );
   }
 
