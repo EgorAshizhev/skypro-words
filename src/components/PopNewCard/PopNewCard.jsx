@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useTasks } from '../../context/TaskContext';
+import { Calendar } from '../Calendar/Calendar';
 import {
   SPopNewCard,
   SNewCardContainer,
@@ -10,6 +12,7 @@ import {
   SNewCardWrap,
   SNewCardForm,
   SNewCardFormNewBlock,
+  SNewCardCalendarWrap,
   SFormNewInput,
   SFormNewArea,
   SFormNewCreate,
@@ -28,11 +31,12 @@ const CATEGORIES = [
 
 export const PopNewCard = () => {
   const navigate = useNavigate();
-  const { onCreateCard } = useOutletContext();
+  const { createCard } = useTasks();
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [activeCategory, setActiveCategory] = useState('Web Design');
+  const [date, setDate] = useState(() => new Date().toISOString());
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -47,12 +51,12 @@ export const PopNewCard = () => {
     setIsLoading(true);
     setError('');
     try {
-      await onCreateCard?.({
+      await createCard({
         title: title.trim(),
         description: description.trim(),
         topic: activeCategory,
         status: 'Без статуса',
-        date: new Date().toISOString(),
+        date,
       });
       onClose();
     } catch (err) {
@@ -107,7 +111,9 @@ export const PopNewCard = () => {
                   />
                 </SNewCardFormNewBlock>
               </SNewCardForm>
-              <div className="pop-new-card__calendar calendar" />
+              <SNewCardCalendarWrap className="pop-new-card__calendar calendar">
+                <Calendar value={date} onChange={setDate} label="Срок исполнения" />
+              </SNewCardCalendarWrap>
             </SNewCardWrap>
             <SPopCategories className="pop-new-card__categories categories">
               <SFormSubTttlP className="subttl">Категория</SFormSubTttlP>

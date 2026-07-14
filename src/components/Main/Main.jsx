@@ -1,65 +1,92 @@
 import React from 'react';
+import { DragDropContext } from '@hello-pangea/dnd';
 import { Column } from '../Column/Column';
-import { SMain, SMConteiner, SMainBlock, SMainContent } from './Main.styled';
+import { useTasks } from '../../context/TaskContext';
+import {
+  SMain,
+  SMConteiner,
+  SMainBlock,
+  SMainContent,
+  SLoadingContainer,
+  SLoadingText,
+  SEmptyContainer,
+  SEmptyText,
+  SErrorText,
+  SRetryBtn,
+} from './Main.styled';
+
+const COLUMN_TITLES = [
+  'Без статуса',
+  'Нужно сделать',
+  'В работе',
+  'Тестирование',
+  'Готово',
+];
 
 export const Main = ({ loading, error, groupedCards, onRetry }) => {
+  const { moveCard } = useTasks();
+
   if (loading) {
     return (
-      <div className="loading-container">
-        <div className="loading-text">Данные загружаются</div>
-      </div>
+      <SLoadingContainer className="loading-container">
+        <SLoadingText className="loading-text">Данные загружаются</SLoadingText>
+      </SLoadingContainer>
     );
   }
 
   if (error) {
     return (
-      <div className="loading-container">
+      <SLoadingContainer className="loading-container">
         <div style={{ textAlign: 'center' }}>
-          <p style={{ color: '#e53e3e', marginBottom: '16px', fontSize: '16px' }}>
-            {error}
-          </p>
-          {onRetry && (
-            <button
-              onClick={onRetry}
-              style={{
-                padding: '8px 24px',
-                backgroundColor: '#3D41C4',
-                color: '#fff',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                fontSize: '14px',
-              }}
-            >
-              Повторить
-            </button>
-          )}
+          <SErrorText>{error}</SErrorText>
+          {onRetry && <SRetryBtn onClick={onRetry}>Повторить</SRetryBtn>}
         </div>
-      </div>
+      </SLoadingContainer>
     );
   }
 
-  const columnTitles = [
-    'Без статуса',
-    'Нужно сделать',
-    'В работе',
-    'Тестирование',
-    'Готово',
-  ];
+  const hasCards = Object.values(groupedCards).some(
+    (cards) => Array.isArray(cards) && cards.length > 0
+  );
+
+  if (!hasCards) {
+    return (
+      <SEmptyContainer className="empty-container">
+        <SEmptyText className="empty-text">Здесь пока нет задач</SEmptyText>
+      </SEmptyContainer>
+    );
+  }
+
+  const handleDragEnd = (result) => {
+    const { source, destination, draggableId } = result;
+
+    if (!destination) return;
+    if (
+      source.droppableId === destination.droppableId &&
+      source.index === destination.index
+    ) {
+      return;
+    }
+
+    const newStatus = destination.droppableId;
+    moveCard(draggableId, newStatus);
+  };
 
   return (
     <SMain>
       <SMConteiner>
-        <SMainBlock>
-          <SMainContent>
-            {columnTitles.map((title) => (
-              <Column
-                key={title}
-                title={title}
-                cards={groupedCards[title] || []}
-              />
-            ))}
-          </SMainContent>
+        <SMainBlock className="main__block">
+          <DragDropContext onDragEnd={handleDragEnd}>
+            <SMainContent className="main__content">
+              {COLUMN_TITLES.map((title) => (
+                <Column
+                  key={title}
+                  title={title}
+                  cards={groupedCards[title] || []}
+                />
+              ))}
+            </SMainContent>
+          </DragDropContext>
         </SMainBlock>
       </SMConteiner>
     </SMain>

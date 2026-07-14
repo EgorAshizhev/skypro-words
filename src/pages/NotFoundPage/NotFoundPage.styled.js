@@ -7,7 +7,7 @@ export const SNotFoundWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #f1f1f1;
+  background-color: ${({ theme }) => theme.colors.pageBg};
   font-family: 'Roboto', Arial, Helvetica, sans-serif;
 `;
 
@@ -32,14 +32,14 @@ export const SNotFoundCode = styled.h1`
 export const SNotFoundTitle = styled.h2`
   font-size: 24px;
   font-weight: 700;
-  color: #2c3e50;
+  color: ${({ theme }) => theme.colors.text};
   margin-bottom: 12px;
   letter-spacing: -0.5px;
 `;
 
 export const SNotFoundText = styled.p`
   font-size: 16px;
-  color: #94a6be;
+  color: ${({ theme }) => theme.colors.textMuted};
   margin-bottom: 32px;
   line-height: 1.5;
 `;
